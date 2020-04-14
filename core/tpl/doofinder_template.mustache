@@ -1,0 +1,94 @@
+{{#is_first}}
+	{{#banner}}
+		<a class="df-banner" {{#banner.blank}}target="_blank"{{/banner.blank}} href="{{banner.link}}">
+		<img src="{{banner.image}}">
+		</a>
+	{{/banner}}
+{{/is_first}}
+{{#total}}
+	<div id="close-helper" data-role="close" hidden="true"></div>
+	{{#results}}
+		<div class="df-card">
+		<a class="df-card__main" data-df-hitcounter="{{dfid}}">
+			{{#image_link}}
+			<figure class="df-card__image">
+				<img src="{{#remove-protocol}}{{image_link}}{{/remove-protocol}}" alt="{{mpn}}">
+			</figure>
+			{{/image_link}}
+			{{^image_link}}
+			<figure class="df-card__image">
+				<img id="nophoto-{{id}}" src="/public/theme/common/nophoto.png" alt="{{mpn}}">
+			</figure>
+			{{/image_link}}
+			{{#barcode_img}}
+			<figure class="df-card__image">
+				<img src="{{#remove-protocol}}{{barcode_img}}{{/remove-protocol}}" alt="{{gtin}}">
+			</figure>
+			{{/barcode_img}}
+			<div class="df-card__content">
+				<div class="df-card__mpn">
+					<span class="df-dol__mpn">{{mpn}}</span>
+					{{#stock_reel}}
+						<span class="df-dol__stock_reel"> Stock {{stock_reel}}</span>
+					{{/stock_reel}}
+				</div>
+				<div class="df-card__title">{{title}}</div>
+				<div class="df-card__description">{{{description}}}</div>
+				{{#prices_by_qty_list}}
+					<div class="df-card__content" data-price_level_by_qty="{{index}}" data-id="{{id}}">
+						{{#value}}
+							<div class="df-card__pricing" data-price_level_by_qty_value="{{index}}">
+								<span class="df-card__price">
+									{{#format-currency}}{{unitprice}}{{/format-currency}} ({{price_base_type}})
+								</span>
+								<span class="df-card__price">
+									{{#translate}}For{{/translate}} {{quantity}} {{#translate}}pieces{{/translate}}
+								</span>
+								{{#remise_percent}}
+									<span class="df-card__price">
+										{{remise_percent}} %
+									</span>
+								{{/remise_percent}}
+								<button type="button" class="button" data-price="{{unitprice}}" data-qty="{{quantity}}" data-remise_percent="{{remise_percent}}" data-price_base_type="{{price_base_type}}" data-id="{{id}}" data-title="{{title}}" data-mpn="{{mpn}}">
+									{{#translate}}Select{{/translate}}
+								</button>
+							</div>
+						{{/value}}
+					</div>
+				{{/prices_by_qty_list}}
+				{{#multiprices}}
+					<div class="df-card__pricing" data-price_level="{{index}}" data-id="{{id}}">
+						<span class="df-card__price">
+							{{#format-currency}}{{value}}{{/format-currency}} (HT) Prix multi
+						</span>
+						<button type="button" class="button" data-price="{{value}}"  data-id="{{id}}" data-title="{{title}}" data-mpn="{{mpn}}">
+							{{#translate}}Select{{/translate}}
+						</button>
+					</div>
+				{{/multiprices}}
+				
+				{{#price}}
+					<div class="df-card__pricing" data-no_pricel_level_id="{{id}}">
+						<span class="df-card__price">
+							{{#format-currency}}{{price}}{{/format-currency}} (HT) Prix unique
+						</span>
+						<button type="button" class="button" data-price="{{price}}"  data-id="{{id}}" data-title="{{title}}" data-mpn="{{mpn}}">
+							{{#translate}}Select{{/translate}}
+						</button>
+					</div>
+				{{/price}}
+				
+				{{#multiprices_tva_tx}}
+					<div id="multiprices_tva_tx-{{id}}-{{index}}" data-price_level="{{index}}" data-tva_tx="{{value}}"></div>
+				{{/multiprices_tva_tx}}
+				{{^multiprices_tva_tx}}
+					<div id="tva_tx-{{id}}" data-tva_tx="{{tva_tx}}"></div>
+				{{/multiprices_tva_tx}}
+			</div>
+		</a>
+		</div>
+	{{/results}}
+{{/total}}
+{{^total}}
+	<p class="df-no-results">{{#translate}}Sorry, no results found.{{/translate}}</p>
+{{/total}}
